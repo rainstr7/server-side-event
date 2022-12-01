@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>SSE</h1>
+<div id="root"></div>
+<script>
+    const eventSource = new EventSource("https://localhost:8080/stream");
+    const rootDiv = document.querySelector('#root');
+    eventSource.onmessage = (message) => {
+        rootDiv.innerText = `id: ${message.lastEventId} ${message.data}`;
+    }
+
+    eventSource.addEventListener('end-of-stream', () => {
+        eventSource.close();
+    })
+</script>
+</body>
+</html>
